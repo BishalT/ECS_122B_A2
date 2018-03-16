@@ -7,23 +7,22 @@ using namespace std;
 // Initialize the bloom filter: compute k and create k hash functions
 // using RandomMatrixHash
 BloomFilter::BloomFilter(std::size_t bits, std::size_t expectedSetSize) {
-  numHash = ceil(( bits / expectedSetSize ) * log(2));
+  numHash = round(( bits / expectedSetSize ) * log(2));
   //numHash = 12;
   srand(time(NULL));
   for( unsigned int index = 0; index < numHash; index++ ){
-    RandomMatrixHash hashMatrix( FILTER_SIZE );
+    RandomMatrixHash hashMatrix( bits );
     hash_functions.push_back( hashMatrix );
   }
+  bloomVector.resize(bits);
+  std::fill( bloomVector.begin(), bloomVector.end(), 0);
 }
 
 // Insert x into the filter
 void BloomFilter::Insert(int x) {
   for( int i = 0; i < this->numHash; i++ ) {
     std::size_t hash_index = hash_functions[i].Hash(x);
-    if( bloomArray[ hash_index ] == 0 ){
-       unique_spaces++;
-    }
-    bloomArray[ hash_index ]++;
+    bloomVector[ hash_index ] = 1;
  }
 }
 
@@ -38,7 +37,7 @@ void BloomFilter::Insert(std::set<int> S) {
 bool BloomFilter::Query(int x) {
   for (int i = 0; i < numHash; i++) {
     std::size_t hash_index = hash_functions[i].Hash(x);
-    if( bloomArray[ hash_index ] == 0 ){
+    if( bloomVector[ hash_index ] == 0 ){
       return false;
     }
   }

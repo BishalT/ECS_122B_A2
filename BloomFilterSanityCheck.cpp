@@ -8,10 +8,10 @@ using testing::Test;
 
 using namespace std;
 #define NUM_TEST_CASES 10000000
-#define SET_SIZE 10000
-#define FILTER_SIZE 8 * SET_SIZE
+#define SET_SIZE 16384	// 2^14
+#define FILTER_SIZE 8 * SET_SIZE	// 2^17
 #define ERROR_THRESHOLD .01
-#define FALSE_POSITIVE_RATE_TARGET .047
+#define FALSE_POSITIVE_RATE_TARGET .027
 
 // Sanity check for no false negatives.
 // Initialize your bloom filter to have FILTER_SIZE bits.
@@ -23,10 +23,11 @@ using namespace std;
 TEST(BloomFilterSanityCheck, NoFalseNegatives) {
   BloomFilter bloom( FILTER_SIZE, SET_SIZE );
   int trueCount = 0;
+
   for( int i = 0; i < SET_SIZE; i++ ){
     bloom.Insert(i);
   }
-
+  
   for( int i = 0; i < SET_SIZE; i++ ){
     if ( bloom.Query(i) ) {
       trueCount++;

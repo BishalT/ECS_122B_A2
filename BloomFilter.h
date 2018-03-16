@@ -11,9 +11,6 @@
 #include "RandomMatrixHash.h"
 
 //#define NUM_TEST_CASES 100000
-#define SET_SIZE 10000
-#define FILTER_SIZE 8 * SET_SIZE
-//#define FILTER_SIZE 111566
 
 class BloomFilter {
  public:
@@ -26,7 +23,7 @@ class BloomFilter {
   int false_pos = 0;
   int unique_spaces = 0;
   int numHash = 0;
-  int bloomArray[ FILTER_SIZE ] = {0};
+  std::vector<int> bloomVector;
  private:
 };  // BloomFilter
 

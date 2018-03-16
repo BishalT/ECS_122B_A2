@@ -19,7 +19,7 @@ using namespace std;
 
 RandomMatrixHash::RandomMatrixHash( unsigned int m ) {		// constructor
 	table_size = m;
-	int rowCount = ( int ) ceil(log2(m));
+	int rowCount = ( int ) log2(m);
 	matrix.resize( rowCount );	// # rows = rowCount
 	for( int row = 0; row < rowCount; row++ ){	// # columns = KEY_VAL
 		matrix[ row ].resize( KEY_VAL );
@@ -48,7 +48,7 @@ std::size_t RandomMatrixHash::Hash( int key ) const {
 	}
 
 	// matrix multiplication
-	int mat_row = (int) ceil(log2(table_size)), key_col = 1, key_row = KEY_VAL;
+	int mat_row = (int) log2(table_size), key_col = 1, key_row = KEY_VAL;
 	int result[ mat_row ];
 
 	for( int row_index = 0; row_index < mat_row; row_index++ ){
@@ -65,7 +65,7 @@ std::size_t RandomMatrixHash::Hash( int key ) const {
 		hashBrown += result[ index ] * pow(2, mat_row - index - 1);
 	}
 
-	return hashBrown % table_size;
+	return hashBrown;
 }
 
 /*
