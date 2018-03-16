@@ -12,4 +12,4 @@ Bloom Filter implementation with arrays and relying on random matrix hash. Inser
 Random Matrix Hash Uniform Generation: Working <br />
 Random Matrix Hash Roughly Equal Access: Working <br />
 Bloom Filter No False Negatives: Working <br />
-Bloom Filter Low False Positives: Partially Working <br />
+Bloom Filter Low False Positives: Working, changed values <br />
